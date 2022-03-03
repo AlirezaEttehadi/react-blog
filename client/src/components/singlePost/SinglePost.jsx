@@ -1,16 +1,27 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./singlePost.css";
 
 export default function SinglePost() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+  useEffect(() => {
+    const fetchPost = async () => {
+      const res = await axios.get(`/posts/${path}`);
+      setPost(res.data);
+    };
+    fetchPost();
+  }, [path]);
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          src="https://i.ibb.co/Ny59Mcb/pexels-je-shoots-126292.jpg"
-          alt=""
-          className="singlePostImg"
-        />
+        {post.photo ? (
+          <img src={post.photo} alt="" className="singlePostImg" />
+        ) : null}
         <h1 className="singlePostTitle">
-          Lorem ipsum dolor sit amet
+          {post.title}
           <div className="singlePostEdit">
             <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
             <i className="singlePostIcon fa-solid fa-trash-can"></i>
@@ -18,32 +29,13 @@ export default function SinglePost() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Alireza</b>
+            Author: <b>{post.username}</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDesc">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere,
-          necessitatibus similique. Quidem voluptas adipisci voluptates
-          asperiores? Deserunt incidunt necessitatibus ut omnis earum, ducimus,
-          ad dolores id commodi veniam, molestiae illo!
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere,
-          necessitatibus similique. Quidem voluptas adipisci voluptates
-          asperiores? Deserunt incidunt necessitatibus ut omnis earum, ducimus,
-          ad dolores id commodi veniam, molestiae illo!
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere,
-          necessitatibus similique. Quidem voluptas adipisci voluptates
-          asperiores? Deserunt incidunt necessitatibus ut omnis earum, ducimus,
-          ad dolores id commodi veniam, molestiae illo!
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere,
-          necessitatibus similique. Quidem voluptas adipisci voluptates
-          asperiores? Deserunt incidunt necessitatibus ut omnis earum, ducimus,
-          ad dolores id commodi veniam, molestiae illo!
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere,
-          necessitatibus similique. Quidem voluptas adipisci voluptates
-          asperiores? Deserunt incidunt necessitatibus ut omnis earum, ducimus,
-          ad dolores id commodi veniam, molestiae illo!
-        </p>
+        <p className="singlePostDesc">{post.desc}</p>
       </div>
     </div>
   );

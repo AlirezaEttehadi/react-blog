@@ -9,7 +9,7 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("posts");
+      const res = await axios.get("/posts/");
       setPosts(res.data)
     };
     fetchPosts();
