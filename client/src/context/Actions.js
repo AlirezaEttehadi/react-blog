@@ -15,3 +15,8 @@ export const loginFailure = () => {
     type: constants.LOGIN_FAILURE,
   };
 };
+export const logout = () => {
+  return {
+    type: constants.LOG_OUT,
+  };
+};
