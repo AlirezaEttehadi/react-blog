@@ -20,3 +20,20 @@ export const logout = () => {
     type: constants.LOG_OUT,
   };
 };
+
+export const updateStart = () => {
+  return {
+    type: constants.UPDATE_START,
+  };
+};
+export const updateSuccess = (user) => {
+  return {
+    type: constants.UPDATE_SUCCESS,
+    payload: user,
+  };
+};
+export const updateFailure = () => {
+  return {
+    type: constants.UPDATE_FAILURE,
+  };
+};
